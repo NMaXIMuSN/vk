@@ -1,24 +1,20 @@
 import {
-  AdaptivityProvider,
-  ConfigProvider,
   AppRoot,
   SplitLayout,
   SplitCol,
   View,
   Panel,
   PanelHeader,
-  Header,
   Group,
-  SimpleCell,
   usePlatform,
-  Root,
   useAdaptivityConditionalRender,
   Cell,
-  Avatar,
-  Placeholder,
-  Button,
-  Separator,
+  Tabbar,
+  TabbarItem,
+  VisuallyHidden,
+  Epic,
 } from '@vkontakte/vkui';
+import { ElementProps } from '@vkontakte/vkui/dist/hooks/useAdaptivityConditionalRender/types';
 import { useState } from 'react';
 import { FormView } from 'src/pages/form';
 import { MainView } from 'src/pages/main';
@@ -35,7 +31,9 @@ export const App = () => {
   return (
     <AppRoot>
       <SplitLayout style={{ justifyContent: 'center' }} header={!isVKCOM && <PanelHeader delimiter="none" />}>
-        <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+      {viewWidth.tabletPlus && (
+
+        <SplitCol className={(viewWidth.tabletPlus as ElementProps).className} fixed width={280} maxWidth={280}>
           <Panel>
             {!isVKCOM && <PanelHeader />}
             <Group>
@@ -47,18 +45,35 @@ export const App = () => {
               </Group>
           </Panel>  
         </SplitCol>
-        <SplitCol width="100%" maxWidth='700px' stretchedOnMobile autoSpaced>
-          <View id='view' activePanel={panel}>
-            <Panel id={panels[0]}>
-              <MainView id={panel[0]} />
-            </Panel>
-            <Panel id={panels[1]}>
-              <FormView id={panel[1]} />
-            </Panel>
-          </View>
-        </SplitCol>
+      )}
 
-      </SplitLayout>
+        <SplitCol width="100%" maxWidth='700px' stretchedOnMobile autoSpaced>
+          <Epic
+            activeStory={panel}
+            tabbar={viewWidth.tabletMinus && (
+              <Tabbar className={viewWidth.tabletMinus.className}>
+                <TabbarItem selected={panel === panels[0]} text={panels[0]} onClick={() => setPanel(panels[0])}>
+                  <VisuallyHidden>Новости</VisuallyHidden>
+                </TabbarItem>
+                <TabbarItem selected={panel === panels[1]} text={panels[1]} onClick={() => setPanel(panels[1])}>
+                  <VisuallyHidden>Профиль</VisuallyHidden>
+                </TabbarItem>
+              </Tabbar>
+            )}
+          >
+            <View id={panels[0]} activePanel={panels[0]}>
+              <Panel id={panels[0]}>
+                <MainView id={panel[0]} />
+              </Panel>
+            </View>
+            <View id={panels[1]} activePanel={panels[1]}>
+              <Panel id={panels[1]}>
+                <FormView id={panel[1]} />
+              </Panel>
+            </View>
+          </Epic>
+        </SplitCol>
+      </SplitLayout>      
     </AppRoot>
   );
 };

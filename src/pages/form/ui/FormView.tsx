@@ -77,7 +77,7 @@ export const FormView = ({ id }: FormViewProps) => {
               <Input value={name} id="name" onChange={onChange}/>
             </FormItem>
             <FormItem style={{flex: '0', minWidth: 'min-content'}}>
-              <Button loading={isLoading} type="submit" className="rounded-l-none" size="l" onClick={onClick}>
+              <Button type="submit" className="rounded-l-none" size="l" onClick={onClick}>
                 Send
               </Button>
             </FormItem>
