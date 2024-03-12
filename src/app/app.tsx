@@ -34,7 +34,7 @@ export const App = () => {
 
   return (
     <AppRoot>
-      <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
+      <SplitLayout style={{ justifyContent: 'center' }} header={!isVKCOM && <PanelHeader delimiter="none" />}>
         <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
           <Panel>
             {!isVKCOM && <PanelHeader />}
@@ -47,7 +47,7 @@ export const App = () => {
               </Group>
           </Panel>  
         </SplitCol>
-        <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+        <SplitCol width="100%" maxWidth='700px' stretchedOnMobile autoSpaced>
           <View id='view' activePanel={panel}>
             <Panel id={panels[0]}>
               <MainView id={panel[0]} />
