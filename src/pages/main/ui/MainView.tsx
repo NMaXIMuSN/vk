@@ -8,7 +8,7 @@ interface MainViewProps {
 
 // https://vk.com/away.php?to=https%3A%2F%2Fcatfact.ninja%2Ffact&utf=1
 
-interface IAxiosResponse {
+interface IFact {
   fact: string
   length: number
 }
@@ -18,7 +18,7 @@ export const MainView = ({ id }: MainViewProps) => {
   const InputRef = useRef<HTMLInputElement | null>(null)
 
   const onClick = async () => {
-    const { data } = await axiosInstance<IAxiosResponse>({
+    const { data } = await axiosInstance<IFact>({
       method: 'GET',
       url: 'https://catfact.ninja/fact'
     })
@@ -46,12 +46,12 @@ export const MainView = ({ id }: MainViewProps) => {
         <PanelHeader>Main</PanelHeader>
         <Group>
           <FormLayoutGroup mode="horizontal" segmented>
-            <FormItem htmlFor="name" top="Имя" >
+            <FormItem htmlFor="name" top="Fact" >
               <Input value={inputText} id="name" getRef={InputRef} onFocus={onFocus} onChange={(e) => setInputText(e.target.value)}/>
             </FormItem>
-            <FormItem style={{maxWidth: '120px'}}>
-              <Button className="rounded-l-none" size="l" onClick={onClick}>
-                Отправить
+            <FormItem style={{flex: '0', minWidth: 'min-content'}}>
+              <Button className="rounded-l-none flex-[0] max-w-none min-w-min" size="l" onClick={onClick}>
+                Send
               </Button>
             </FormItem>
           </FormLayoutGroup>
